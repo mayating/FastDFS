@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>债权合同管理</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+<body style="margin: 50px">
+    <table class="table table-striped">
+        <caption>债权合同信息列表</caption>
+        <thead>
+            <tr>
+                <th>序号</th>
+                <th>债权借款人姓名</th>
+                <th>债权借款人身份证</th>
+                <th>债权借款人住址</th>
+                <th>债权借款人手机号</th>
+                <th>债权借款人性别</th>
+                <th>债权借款人借款金额</th>
+                <th>合同管理</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="creditorInfo:${creditorInfoList}">
+                <td th:text="${creditorInfoStat.count}"></td>
+                <td th:text="${creditorInfo.realname}"></td>
+                <td th:text="${creditorInfo.idcard}"></td>
+                <td th:text="${creditorInfo.address}"></td>
+                <td th:text="${creditorInfo.phone}"></td>
+                <td th:text="${creditorInfo.sex == 1 ? '男' : '女'}"></td>
+                <td th:text="${creditorInfo.money}"></td>
+                <td>
+
+                    <span th:if="${creditorInfo.getGroupname() ne null && creditorInfo.remotefilepath ne null}">
+                        <a th:href="@{'/fastdfs/download?id=' + ${creditorInfo.id}}">下载</a>
+                        <a th:href="@{'javascript:deleteFile(' + ${creditorInfo.id} + ')'}">删除</a>
+                    </span>
+                    <span th:unless="${creditorInfo.getGroupname() ne null && creditorInfo.remotefilepath ne null}">
+                        <!--为哪个合同上传，需要将合同的id传递过去-->
+                        <a th:href="@{'/fastdfs/toUpload?id=' + ${creditorInfo.id}}">上传</a>
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+<script type="text/javascript" th:inline="javascript">
+    function deleteFile(id) {
+        //获取项目的上下文根
+        var contenxtPath = [[${#request.getContextPath()}]];
+        $.ajax({
+            url: contenxtPath + "/fastdfs/fileDelete",
+            type: "post",
+            data: {
+                "id": id
+            },
+            success: function (responseMsg) {
+                if(responseMsg == 0){
+                    alert("删除成功");
+                    window.location.reload();
+                }else{
+                    alert("删除失败");
+                }
+            }
+        });
+    }
+</script>
+</html>

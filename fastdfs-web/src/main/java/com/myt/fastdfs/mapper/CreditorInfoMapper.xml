@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.myt.fastdfs.mapper.CreditorInfoMapper">
+  <resultMap id="BaseResultMap" type="com.myt.fastdfs.model.CreditorInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="realName" jdbcType="VARCHAR" property="realname" />
+    <result column="idCard" jdbcType="VARCHAR" property="idcard" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="money" jdbcType="DECIMAL" property="money" />
+    <result column="groupName" jdbcType="VARCHAR" property="groupname" />
+    <result column="remoteFilePath" jdbcType="VARCHAR" property="remotefilepath" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, realName, idCard, address, sex, phone, money, groupName, remoteFilePath
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from creditor_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from creditor_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.myt.fastdfs.model.CreditorInfo">
+    insert into creditor_info (id, realName, idCard, 
+      address, sex, phone, 
+      money, groupName, remoteFilePath
+      )
+    values (#{id,jdbcType=INTEGER}, #{realname,jdbcType=VARCHAR}, #{idcard,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, 
+      #{money,jdbcType=DECIMAL}, #{groupname,jdbcType=VARCHAR}, #{remotefilepath,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.myt.fastdfs.model.CreditorInfo">
+    insert into creditor_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="realname != null">
+        realName,
+      </if>
+      <if test="idcard != null">
+        idCard,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="money != null">
+        money,
+      </if>
+      <if test="groupname != null">
+        groupName,
+      </if>
+      <if test="remotefilepath != null">
+        remoteFilePath,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="realname != null">
+        #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null">
+        #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="groupname != null">
+        #{groupname,jdbcType=VARCHAR},
+      </if>
+      <if test="remotefilepath != null">
+        #{remotefilepath,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.myt.fastdfs.model.CreditorInfo">
+    update creditor_info
+    <set>
+      <if test="realname != null">
+        realName = #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null">
+        idCard = #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        money = #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="groupname != null">
+        groupName = #{groupname,jdbcType=VARCHAR},
+      </if>
+      <if test="remotefilepath != null">
+        remoteFilePath = #{remotefilepath,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.myt.fastdfs.model.CreditorInfo">
+    update creditor_info
+    set realName = #{realname,jdbcType=VARCHAR},
+      idCard = #{idcard,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      phone = #{phone,jdbcType=VARCHAR},
+      money = #{money,jdbcType=DECIMAL},
+      groupName = #{groupname,jdbcType=VARCHAR},
+      remoteFilePath = #{remotefilepath,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectAllCredtiorInfo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from creditor_info
+  </select>
+
+  <update id="updateConstractById" parameterType="java.lang.Integer">
+    update creditor_info
+    set
+    groupName = NULL,
+    remoteFilePath = NULL
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
